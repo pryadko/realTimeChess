@@ -8,7 +8,7 @@ var cfg = {
         hod += '"'+source + '-'+target + '", ' ;
         console.log(hod);
     },
-    sparePieces: true
+    sparePieces: false
 };
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
@@ -40,4 +40,5 @@ $( window ).unload(function() {
 $(function () {
     board = ChessBoard('board', cfg);
     connect();
+    $('#flipOrientationBtn').on('click', board.flip);
 });
