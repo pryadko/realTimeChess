@@ -1,16 +1,15 @@
 package chess;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Observable;
+import org.springframework.stereotype.Service;
 
+import java.util.*;
+
+@Service
 public class EventSource extends Observable implements Runnable {
-    private List<String> hod = Arrays.asList(
+    private static List<String> MOVES = Arrays.asList(
             "start"
             , "e2-e4", "c7-c5"
             , "g1-f3", "d7-d6"
             , "d2-d4", "c5-d4"
-            , "f3-d4", "c5-d4"
             , "f3-d4", "g8-f6"
             , "f2-f3", "e7-e5"
             , "d4-b3", "f8-e7"
@@ -60,18 +59,23 @@ public class EventSource extends Observable implements Runnable {
             , "f4-h6"
     );
 
+    private String moved;
+
     public EventSource() {
         new Thread(this).start();
+        moved = "";
     }
 
     @Override
     public void run() {
-        Iterator<String> iterator = hod.iterator();
+        Iterator<String> iterator = MOVES.iterator();
         waitASecond(5000);
         while (iterator.hasNext()) {
-            waitASecond(500);
+            waitASecond((new Random().nextInt(3))*1000 + 1000);
             setChanged();
-            notifyObservers(iterator.next());
+            String move = iterator.next();
+            moved += move + " ";
+            notifyObservers(move);
         }
     }
 

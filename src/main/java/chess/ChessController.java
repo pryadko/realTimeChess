@@ -5,12 +5,12 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class GreetingController {
+public class ChessController {
 
     @MessageMapping("/hello")
-    @SendTo("/topic/greetings")
-    public Greeting  greeting(ChessMessage message) {
+    @SendTo("/topic/messages")
+    public ChessMessage  message(ChessMessage message) {
         
-        return new Greeting(message.getName());
+        return message;
     }
 }

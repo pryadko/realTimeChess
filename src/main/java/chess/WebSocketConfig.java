@@ -1,6 +1,5 @@
 package chess;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;
@@ -24,12 +23,6 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/gs-guide-websocket").withSockJS().setInterceptors(httpSessionIdHandshakeInterceptor());
-        try {
-
-        } catch (Exception e) {
-            //e.printStackTrace();
-        }
-
     }
 
     @Override
@@ -38,8 +31,8 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
     }
 
     @Bean
-    public GreetingController greetingController() {
-        return new GreetingController();
+    public ChessController chessController() {
+        return new ChessController();
     }
 
     @Bean

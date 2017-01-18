@@ -9,11 +9,13 @@ import java.util.Observable;
 @Service
 public class Observer {
 
-    @Autowired
     private SimpMessagingTemplate webSocket;
-    private Observable observable = new EventSource();
+    private Observable observable;
 
-    public Observer() {
+    @Autowired
+    public Observer(Observable observable,SimpMessagingTemplate webSocket ) {
+        this.observable = observable;
+        this.webSocket = webSocket;
         observable.addObserver(
                 (o, arg) ->
                         webSocket.convertAndSend("/topic/greetings",new ChessMessage((String) arg)));
