@@ -2,6 +2,7 @@ package chess;
 
 public class ChessMessage {
     private String name;
+    private String message;
     private int count;
 
     public ChessMessage() {
@@ -25,5 +26,13 @@ public class ChessMessage {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

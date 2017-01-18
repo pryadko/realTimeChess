@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ChessController {
 
-    @MessageMapping("/hello")
+    @MessageMapping("/message")
     @SendTo("/topic/messages")
     public ChessMessage  message(ChessMessage message) {
         

@@ -8,17 +8,25 @@ var cfg = {
 function connect() {
     var socket = new SockJS('/gs-guide-websocket');
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        stompClient.subscribe('/topic/greetings', function (greeting) {
-            var model = JSON.parse(greeting.body);
-            if(model.name === "start") {
+    stompClient.connect({}, function () {
+        stompClient.subscribe('/topic/moves', function (moves) {
+            var model = JSON.parse(moves.body);
+            if (model.name === "start") {
                 board.start();
             }
             board.move(model.name);
         });
+        stompClient.subscribe('/topic/messages', function (moves) {
+            var model = JSON.parse(moves.body);
+
+            showMessage(model.message);
+        });
     });
 }
 
+function showMessage(message) {
+    $("#messages").append("<tr><td>" + message + "</td></tr>");
+}
 
 function disconnect() {
     if (stompClient != null) {
@@ -26,8 +34,12 @@ function disconnect() {
     }
     console.log("Disconnected");
 }
+function sendMessage() {
+    stompClient.send("/app/message", {}, JSON.stringify({'message': $("#message").val()}));
+    $("#message").val('');
+}
 
-$( window ).unload(function() {
+$(window).unload(function () {
     disconnect();
 });
 
@@ -35,4 +47,10 @@ $(function () {
     board = ChessBoard('board', cfg);
     connect();
     $('#flipOrientationBtn').on('click', board.flip);
+    $("form").on('submit', function (e) {
+        e.preventDefault();
+    });
+    $("#send").click(function () {
+        sendMessage();
+    });
 });

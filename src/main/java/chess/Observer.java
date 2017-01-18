@@ -18,6 +18,6 @@ public class Observer {
         this.webSocket = webSocket;
         observable.addObserver(
                 (o, arg) ->
-                        webSocket.convertAndSend("/topic/greetings",new ChessMessage((String) arg)));
+                        webSocket.convertAndSend("/topic/moves",new ChessMessage((String) arg)));
     }
 }

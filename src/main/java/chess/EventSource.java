@@ -1,4 +1,5 @@
 package chess;
+
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -22,7 +23,7 @@ public class EventSource extends Observable implements Runnable {
             , "w0-0", "c8-d7"
             , "a1-b1", "f8-c8"
             , "b2-b4", "-a4-b3"
-            ,"a2-b3", "a5-d8"
+            , "a2-b3", "a5-d8"
             , "c1-d3", "c5-e6"
             , "d3-b4", "d7-c6"
             , "f1-d1", "h7-h5"
@@ -59,6 +60,16 @@ public class EventSource extends Observable implements Runnable {
             , "f4-h6"
     );
 
+    private static List<Integer> TIMES = Arrays.asList(
+            2
+            ,2
+            ,2
+            ,10
+            ,50
+    );
+
+    private Iterator<Integer> timer = TIMES.iterator();
+
     private String moved;
 
     public EventSource() {
@@ -69,9 +80,9 @@ public class EventSource extends Observable implements Runnable {
     @Override
     public void run() {
         Iterator<String> iterator = MOVES.iterator();
-        waitASecond(5000);
+        waitASecond(50);
         while (iterator.hasNext()) {
-            waitASecond((new Random().nextInt(3))*1000 + 1000);
+            waitASecond(getTime());
             setChanged();
             String move = iterator.next();
             moved += move + " ";
@@ -79,9 +90,15 @@ public class EventSource extends Observable implements Runnable {
         }
     }
 
+    private int getTime() {
+        if (timer.hasNext()) return timer.next();
+        timer = TIMES.iterator();
+        return getTime();
+    }
+
     private void waitASecond(int time) {
         try {
-            Thread.sleep(time);
+            Thread.sleep(time * 100);
         } catch (InterruptedException e) {
             throw new RuntimeException();
         }
