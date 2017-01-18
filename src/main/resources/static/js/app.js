@@ -10,11 +10,10 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function () {
         stompClient.subscribe('/topic/moves', function (moves) {
-            var model = JSON.parse(moves.body);
-            if (model.name === "start") {
+            if (moves.body === "start") {
                 board.start();
             }
-            board.move(model.name);
+            board.move(moves.body);
         });
         stompClient.subscribe('/topic/messages', function (moves) {
             var model = JSON.parse(moves.body);
