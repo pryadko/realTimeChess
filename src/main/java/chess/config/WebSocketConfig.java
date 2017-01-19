@@ -1,5 +1,7 @@
-package chess;
+package chess.config;
 
+import chess.controller.ChessController;
+import chess.controller.HttpSessionIdHandshakeInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.ChannelRegistration;

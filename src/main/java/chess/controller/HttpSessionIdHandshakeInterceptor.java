@@ -1,5 +1,6 @@
-package chess;
+package chess.controller;
 
+import chess.domain.Counter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;

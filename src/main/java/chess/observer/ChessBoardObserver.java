@@ -1,17 +1,16 @@
-package chess;
+package chess.observer;
 
+import chess.hardware.ChessBoardEventSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Observable;
-
 @Service
-public class Observer {
+public class ChessBoardObserver {
 
     @Autowired
-    public Observer(Observable observable, SimpMessagingTemplate webSocket) {
-        observable.addObserver(
+    public ChessBoardObserver(ChessBoardEventSource chessBoardEventSource, SimpMessagingTemplate webSocket) {
+        chessBoardEventSource.addObserver(
                 (o, arg) ->
                         webSocket.convertAndSend("/topic/moves", arg));
     }

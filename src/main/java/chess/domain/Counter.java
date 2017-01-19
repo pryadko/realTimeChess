@@ -1,4 +1,4 @@
-package chess;
+package chess.domain;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;

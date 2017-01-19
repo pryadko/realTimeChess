@@ -1,11 +1,11 @@
-package chess;
+package chess.hardware;
 
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class EventSource extends Observable implements Runnable {
+public class ChessBoardEventSource extends Observable implements Runnable {
     private static List<String> MOVES = Arrays.asList(
             "start"
             , "e2-e4", "c7-c5"
@@ -61,18 +61,18 @@ public class EventSource extends Observable implements Runnable {
     );
 
     private static List<Integer> TIMES = Arrays.asList(
-            2
-            ,2
-            ,2
+            10
             ,10
-            ,50
+            ,10
+            ,10
+            ,10
     );
 
     private Iterator<Integer> timer = TIMES.iterator();
 
     private String moved;
 
-    public EventSource() {
+    public ChessBoardEventSource() {
         new Thread(this).start();
         moved = "";
     }
